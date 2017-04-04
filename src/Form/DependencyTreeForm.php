@@ -2,8 +2,11 @@
 
 namespace Drupal\dependency_tree\Form;
 
+use Drupal\Console\Extension\Extension;
+use Drupal\Core\Extension\ModuleHandler;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class DependencyTreeForm.
@@ -12,6 +15,26 @@ use Drupal\Core\Form\FormStateInterface;
  */
 class DependencyTreeForm extends FormBase {
 
+  /**
+   * The module handler.
+   *
+   * @var \Drupal\Core\Extension\ModuleHandler
+   */
+  private $moduleHandler;
+
+  /**
+   * DependencyTreeForm constructor.
+   * @param \Drupal\Core\Extension\ModuleHandler $module_handler
+   */
+  public function __construct(ModuleHandler $module_handler) {
+    $this->moduleHandler = $module_handler;
+  }
+
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('module_handler')
+    );
+  }
 
   /**
    * {@inheritdoc}
@@ -27,7 +50,7 @@ class DependencyTreeForm extends FormBase {
     $form['select_module'] = [
       '#type' => 'select',
       '#title' => $this->t('Select module'),
-      '#options' => array('None' => $this->t('None')),
+      '#options' => $this->getModuleOptions(),
       '#size' => 1,
     ];
 
@@ -55,6 +78,23 @@ class DependencyTreeForm extends FormBase {
         drupal_set_message($key . ': ' . $value);
     }
 
+  }
+
+  /**
+   * Gets enabled modules.
+   *
+   * @return array
+   *   The enabled modules.
+   */
+  public function getModuleOptions() {
+    $modules = [];
+    /** @var  Extension $module*/
+    foreach ($this->moduleHandler->getModuleList() as $key => $module) {
+      $modules += [
+        $key => $this->moduleHandler->getName($module->getName()),
+      ];
+    }
+    return $modules;
   }
 
 }
