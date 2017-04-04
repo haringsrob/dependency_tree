@@ -5,7 +5,7 @@ namespace Drupal\Tests\dependency_tree\Functional;
 use Drupal\Tests\BrowserTestBase;
 
 /**
- * Tests Icecat settings page.
+ * Tests dependency tree settings page.
  */
 class BaseTest extends BrowserTestBase {
 
