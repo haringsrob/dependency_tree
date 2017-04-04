@@ -1,0 +1,5 @@
+type: module
+name: Dependency tree
+description: 'Creates a dependency tree of the site modules'
+core: 8.x
+package: Other
