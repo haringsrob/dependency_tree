@@ -2,12 +2,12 @@
 
 namespace Drupal\Tests\dependency_tree\Kernel;
 
-use Drupal\KernelTests\Core\Entity\EntityKernelTestBase;
+use Drupal\KernelTests\KernelTestBase;
 
 /**
  * Dependency tree test.
  */
-class KernelTest extends EntityKernelTestBase {
+class KernelTest extends KernelTestBase {
 
   /**
    * Enable the required modules.
@@ -17,5 +17,10 @@ class KernelTest extends EntityKernelTestBase {
   public static $modules = [
     'dependency_tree',
   ];
+
+  public function testForm() {
+
+  }
+
 
 }

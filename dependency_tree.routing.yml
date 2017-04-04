@@ -1,0 +1,8 @@
+dependency_tree.dependency_tree_form:
+  path: '/admin/dependency_tree'
+  defaults:
+    _form: '\Drupal\dependency_tree\Form\DependencyTreeForm'
+    _title: 'DependencyTreeForm'
+  requirements:
+    _access: 'TRUE'
+  
